@@ -1,0 +1,125 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Andromeda v1.0</title>
+    <link rel="stylesheet" href="bootstrap-4.0.0-alpha.5-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/favicon.png">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js"></script>
+    <script src="bootstrap-4.0.0-alpha.5-dist/js/bootstrap.min.js"></script>
+    
+    <script>
+        $('a').click(function () {
+            $('html, body').animate({
+                scrollTop: $($(this).attr('href')).offset().top
+            }, 300);
+            return false;
+        });
+    </script>
+
+    <!-- google analytics -->
+   <!-- <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-89158232-1', 'auto');
+        ga('send', 'pageview');
+    </script>-->
+</head>
+
+<body>
+    <div class="container main">
+        <div class="row">
+            <a href="index.html" style="color: white">RU</a><label style="color: white"> |</label>
+            <a href="indexen.html" style="color: white">EN</a>
+        </div>
+        <div class="row main">
+            <div class="vert">
+                <div class="card wrap fh bgmain">
+                    <div class="card-block header text-xs-center ">
+                        <h1 class="title"><a class="nodecor" >ANDROMEDA 1.0</a></h1>
+                        <!--<h5 class="card-subtitle text-muted">
+                            Easy Java GUI library for <a class="card-link" href="https://www.lwjgl.org/">LWJGL 3</a> users
+                        </h5>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row main section examples" style="padding: 0% 3% 0% 3%">
+            <div id="examples" class="anchor"></div>
+            <br>
+            <h2 style="text-align: center;">Andromeda Cipher Description</h2>
+            <br>
+            <p style="margin: 0% 5% 0% 5%">
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;The Andromeda code is a stream cipher with a high-degree resistance to almost any type of attack, due to the colossal output of the key generator <i>((256<sup>2</sup>)<sup>256^1500+256^1500</sup>)</i>. The most effective attack on this cipher (as well as on any other) is a brute-force key search, however due to some features, which will be discussed below, the effectiveness of brute-force for this cipher is extremely low. Without a password, you cannot pick up the key for the time you need. The algorithm also "forgives" the use of simple passwords. The output of the generator, due to the wideband warm-up block, doesn’t make it clear that a simple input bit sequence is used. When selecting a password, it's more realistic to guess if the password is "123" for example, than to sort through all possible key values. The cipher is built according to a scheme similar to a one-time notepad, based on the architecture of SPONGE, and consists of a cipher of independent blocks on the principle of crypto primitives, which makes it possible, combining cipher blocks, to collect arbitrarily complex schemes for information encryption. In fact, this cipher is a hybrid (block-stream), but it’s positioned as a streamer. Andromeda easily implements any encryption modes from CBC to OFB in any variations. This cipher is easy to implement, both in software and hardware. The code was submitted for the first time in 2012 on the company’s site – www.oriondevteam.com. The company, by the way, should be proud to be known as the authors of the sensational at the time of the software orion cipher box with the algorithm of complex cryptographic protection orion 7b! There’s information out that the cipher was put up for the NIST contest, after which they were interested in US special services, in consequence of this the cipher was withdrawn from the competition, and the developer of the algorithm disappeared somewhere, after everything had gone this way. </p>
+                <p>A basic implementation usually consists of five blocks:</p>
+            <ol>
+                <li>initialization block;;</li>
+                <li>an encryption unit;</li>
+                <li>block warm-up;</li>
+                <li>permutation block;</li>
+                <li>deinitialization block.</li>
+                </ol>
+                <p>The central node of any stream cipher is the key schedule generator, and Andromeda is no exception.</p>
+                <p>In its scheme of operation, the Andromeda key generator resembles the key generator in RC4, except that Andromeda uses two key blocks, each of 12,000 bits, although the authors website described the implementation of a generator in which these blocks are as large as 120,000 bits each. Another difference between the key schedule generator and the canonical RC4 generator is that the blocks are filled using hashing algorithms in the PBKDFx, x ~ 8000 mode using the inverter functions (hash functions).</p>
+                <p>Хешировать входной пароль для получения ключа возможно в любой комбинации, но автор шифра рекомендует именно режим PBKDFx, x~8000, причем каждый из массивов генератора, которые называются Pool и S-Box рекомендуется заполнять так:</p>
+                <p><b><i>For example</i></b> we have <i>the password 123</i>, S-Box with <i>the resulting output from the hash function Whirlpool PBKDFx, x ~ 8000 (123) - the output is 1500 bytes</i>, after which <i> the password is reversed 123</i> => 321 and the Pool array is filled in, <i>SHA512 PBKDFx, x ~ 8000 (321) - the output is 1500 bytes</i>. As mentioned above, these are <i>the recommended parameters</i>, but you can perform the password conversion to totally initialize the generator structures in any complex way, and of course you can change the algorithms used. The most important rule is  – <b>that the hash function must be  <i>cryptographically stable</i>, and the result of its operation in any of the modes must <i>meet the standards for GPRS</i> – rule #1567.</b></p>
+                <p>The next feature of Andromeda is that <b>the cipher has a byte weight encoder</b>, the principle of its operation, and also, the pseudocode we will consider below.</p>
+
+                <p>Now consider each block of the cipher separately.</p>
+                <p><b>Initialization block</b></p>
+                <p>The initialization block is needed in order to perform the above actions on the arrays of the GPRS algorithm, its work is reflected above.</p>
+                <p><b>Encryption unit</b></p>
+                <p>One of the features of the algorithm encryption block is:</p>
+            <ol>
+                <li>Use of three key bytes to change one open byte of information</li>
+                <li>The encryption mechanism, which, depending on the value of two keys (one from the Pool of the other from the SBox) performs either one set of actions for encrypting the public data, or the other.</li>
+                </ol>
+                <p>The cryptographic transformation block can also be changed and implemented as you like. There are two variants from the authors, in the first variant the cryptographic transformation is achieved due to the multiplication of the plaintext with the key modulo, the Radix-Z algorithm.</p>
+                <p><b>Byte encoder / decoder (pseudocode).</b></p>
+            <div style="text-align: center;">
+                <img src="images/code_1.jpg" style="max-width:80%;">
+            </div>
+
+                <p><b>Warm-up block</b></p>
+                <p>This block represents the operation of the generator in idle mode, in the counter mode, i.e. the procedure for encrypting the zero byte with the specified password is performed, as a result of which the initial state of the arrays of the generator is changed, after which it is possible to start encrypting the master data. This is necessary in order to exclude even a minimal correlation of the elements of the key schedule. Recall that Correlation (from Latin correlatio - "correlation, relationship") or correlation dependence as the statistical relationship of two or more random variables (or quantities that can be regarded as such with a certain permissible degree of accuracy).</p>
+                <p><b>Permutation unit</b></p>
+                <p>The block in which the elements of the Pool and SBox arrays are interchanged to determine the keys.</p>
+
+                <p>The pseudocode of the implementation of the permutation block with an encoder is given below:</p>
+            <div style="text-align: center;">
+                <img src="images/code_2.jpg" style=" max-width:100%;">
+                </div>
+
+            Operation scheme of the permutation block:
+
+            </p>
+            <div style="text-align: center;">
+                <img style="border: 1px solid gray; max-width:100%;" src="images/ris1.png">
+            </div>
+            <p style="margin: 0% 5% 0% 5%">
+                <p><b>Deinitialization block</b></p>
+                <p>Block purification of the generator-initialized structures in the computer memory using t he Gutman method, which means removing by repeated overwriting of memory locations by addresses. The application of the algorithm - Gutman or DoD is not critical, in the hardware implementation this unit works a little differently, it simply nullifies the temporary memory cells in the board.</p>
+            </p>
+            <br/>
+        </div>
+        <div class="hr"></div>
+    </div>
+    
+    <div id="foo" class="footer"></div>
+    <script type="text/javascript"> $('#foo').load("template/footer.html");</script>
+</body>
+
+</html>
